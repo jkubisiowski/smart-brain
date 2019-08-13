@@ -5,32 +5,33 @@ class ProfileIcon extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: false
     };
   }
 
-  toggle() {
+  toggle = () => {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
     }));
-  }
+  };
 
   render() {
     return (
-      <React.Fragment>
+      <div className="pa4 tc">
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-          <DropdownToggle caret>Dropdown</DropdownToggle>
-          <DropdownMenu>
+          <DropdownToggle tag="span" data-toggle="dropdown" aria-expanded={this.state.dropdownOpen}>
+            <img src="http://tachyons.io/img/logo.jpg" className="br-100 ba h3 w3 dib" alt="avatar" />
+          </DropdownToggle>
+          <DropdownMenu
+            className="b--transparent shadow-5"
+            style={{ marginTop: '20px', backgroundColor: 'rgba(255,255,255,0.5' }}
+          >
             <DropdownItem>View profile</DropdownItem>
             <DropdownItem>Sign out</DropdownItem>
           </DropdownMenu>
         </Dropdown>
-        <div class="pa4 tc">
-          <img src="http://tachyons.io/img/logo.jpg" class="br-100 ba h3 w3 dib" alt="avatar" />
-        </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
