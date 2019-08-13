@@ -8,6 +8,8 @@ import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import './App.css';
+import Modal from './components/Modal/Modal';
+import Profile from './components/Profile/Profile';
 
 const particlesOptions = {
   particles: {
@@ -27,6 +29,7 @@ const initialState = {
   boxes: [],
   route: 'signin',
   isSignedIn: true,
+  isProfileOpen: false,
   user: {
     id: '',
     name: '',
@@ -116,15 +119,25 @@ class App extends Component {
     this.setState({ route: route });
   };
 
+  toggleModal = () => {
+    this.setState(prevState => ({ isProfileOpen: !prevState.isProfileOpen }));
+  };
+
   render() {
-    const { isSignedIn, imageUrl, route, boxes } = this.state;
+    const { isSignedIn, imageUrl, route, boxes, isProfileOpen } = this.state;
     return (
       <div className="App">
         <Particles className="particles" params={particlesOptions} />
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+        {isProfileOpen ? (
+          <Modal>
+            <Profile isProfileOpen={isProfileOpen} toggleModal={this.toggleModal} />
+          </Modal>
+        ) : null}
         {route === 'home' ? (
           <div>
             <Logo />
+
             <Rank name={this.state.user.name} entries={this.state.user.entries} />
             <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
             <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
