@@ -45,6 +45,23 @@ class App extends Component {
     this.state = initialState;
   }
 
+  componentDidMount() {
+    const token = window.sessionStorage.getItem('token');
+    if (token) {
+      fetch('http://localhost:3000/signin', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json', Authorization: token }
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.id) {
+            console.log('Success');
+          }
+        })
+        .catch(error => console.log(error));
+    }
+  }
+
   loadUser = data => {
     this.setState({
       user: {
